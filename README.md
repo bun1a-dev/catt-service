@@ -1,25 +1,25 @@
-# Cast All The Things!(catt) Service
-![HAKC)][hakc-shield]
-![HACS][hacs-shield]
-![Version v1.0.1][version-shield]
+# Cast All The Things! Service
 
-Cast All The Things! for Home Assistant #HA
+Cast All The Things! for Home Assistant
 
-## Version history
-| Version | Date        | Desc.              |
-| :-----: | :---------: | ----------------------- |
-| v1.0.0  | 2022.08.19  | First version  |
-| v1.0.1  | 2025.08.25  | icons.json Add  |
+---
 
+> [!NOTE]
+> This is a fork of the original [miumida/catt](https://github.com/miumida/catt) project. Thank you **[@miumida](https://github.com/miumida)** for the original work! ❤️
+
+---
 
 ## Installation
-This can be installed through HACS(Add url to custom repository) by copying all the files from custom_components/catt/ to <config directory>/custom_components/catt/
+This can be installed through HACS:
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=bun1a-dev&repository=catt-service)
+
+or manually.
 
 ## Services
 #### scan
-  Scan the local network and show all Chromecasts and their IPs.
+  Scan the local network and show all Chromecasts and their IP's.
 #### help
-  Show help.
+  Shows CATT help.
 #### command
  | commands | Desc.        |
  | ------------- | --------- |
@@ -39,11 +39,8 @@ This can be installed through HACS(Add url to custom repository) by copying all 
  | volumemute   | Enable or disable mute on supported devices.|
  | volumeup     | Turn up volume by a DELTA increment. |
 #### stop
-  Stop playing.
+  Stops playing on device.
   
-## Thanks.
-- [catt](https://github.com/skorokithakis/catt) - Library for Python 3
-
-[version-shield]: https://img.shields.io/badge/version-1.0.1-orange.svg
-[hakc-shield]: https://img.shields.io/badge/HAKC-Enjoy-blue.svg
-[hacs-shield]: https://img.shields.io/badge/HACS-Custom-red.svg
+## Thanks:
+- [skorokithakis/catt](https://github.com/skorokithakis/catt) - Library
+- [miumida/catt](https://github.com/miumida/catt) - Original Project
