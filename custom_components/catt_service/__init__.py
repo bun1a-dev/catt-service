@@ -37,8 +37,10 @@ async def async_setup_entry(hass, config_entry):
     if hass.data.get(DOMAIN):
         return False
 
-    async def scan(service):
-        output = run_cmd(SCAN_CMD)
+    hass.data[DOMAIN] = True
+
+    async def scan(call):
+        output = await hass.async_add_executor_job(run_cmd, SCAN_CMD)
         _LOGGER.info("[%s] scan -> %s", DOMAIN, output)
         return {"output": output}
 
@@ -49,8 +51,8 @@ async def async_setup_entry(hass, config_entry):
         supports_response=SupportsResponse.ONLY,
     )
 
-    async def help_cmd(service):
-        output = run_cmd(HELP_CMD)
+    async def help_cmd(call):
+        output = await hass.async_add_executor_job(run_cmd, HELP_CMD)
         return {"help": output}
 
     hass.services.async_register(
@@ -60,18 +62,26 @@ async def async_setup_entry(hass, config_entry):
         supports_response=SupportsResponse.ONLY,
     )
 
-    async def stop(service):
-        device = service.data["friendly_name"]
-        run_cmd(CMD_BASE + [device] + STOP_ARGS)
+    async def stop(call):
+        device = call.data["friendly_name"]
+        await hass.async_add_executor_job(
+            run_cmd,
+            CMD_BASE + [device] + STOP_ARGS
+        )
 
     hass.services.async_register(DOMAIN, "stop", stop)
 
-    async def command(service):
-        device = service.data["friendly_name"]
-        cmd = service.data["command"]
-        param = service.data["param"]
+    async def command(call):
+        device = call.data["friendly_name"]
+        cmd = call.data["command"]
+        param = call.data.get("param")
 
-        run_cmd(CMD_BASE + [device, cmd, param])
+        command = CMD_BASE + [device, cmd]
+
+        if param:
+            command.append(param)
+
+        await hass.async_add_executor_job(run_cmd, command)
 
     hass.services.async_register(DOMAIN, "command", command)
 
