@@ -1,5 +1,5 @@
 {
-  "domain": "catt-service",
+  "domain": "catt_service",
   "name": "Cast All The Things!",
   "documentation": "https://github.com/bun1a-dev/catt-service",
   "dependencies": [],
