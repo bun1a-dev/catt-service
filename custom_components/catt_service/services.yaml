@@ -1,0 +1,49 @@
+scan:
+  description: Scan the local network for available CATT devices.
+
+help:
+  description: Show CATT help information.
+
+stop:
+  description: Stop playback on a CATT device.
+  fields:
+    friendly_name:
+      description: "Enter the name of a device available to CATT."
+      example: "Mini"
+      selector:
+        text:
+
+command:
+  description: Execute a CATT command.
+  fields:
+    friendly_name:
+      description: "Enter the name or IP address of a device available to CATT."
+      example: "Mini"
+      selector:
+        text:
+    command:
+      description: "Select a CATT command."
+      example: "cast_site"
+      selector:
+        select:
+          options:
+            - cast
+            - cast_site
+            - play
+            - play_toggle
+            - pause
+            - clear
+            - add
+            - remove
+            - seek
+            - ffwd
+            - rewind
+            - volume
+            - volumeUp
+            - volumemute
+            - volumeDown
+    param:
+      description: "Enter a parameter for the selected CATT command."
+      example: "https://google.com"
+      selector:
+        text:
