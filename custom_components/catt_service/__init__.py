@@ -1,30 +1,31 @@
 import logging
 import subprocess
 
-from homeassistant.core import SupportsResponse
 from homeassistant import config_entries
+from homeassistant.core import SupportsResponse
 
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
 CMD_BASE = ["catt", "-d"]
+STOP_ARGS = ["stop"]
 SCAN_CMD = ["catt", "scan"]
 HELP_CMD = ["catt", "-h"]
-STOP_ARGS = ["stop"]
 
 
-def run_cmd(cmd):
-    result = subprocess.run(
+def subp_run(cmd):
+    output = subprocess.run(
         cmd,
-        capture_output=True,
-        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
     )
 
-    if result.returncode != 0:
-        _LOGGER.error("[%s] Command failed: %s", DOMAIN, cmd)
+    if output.returncode != 0:
+        _LOGGER.error("[%s] The command '%s' failed.", DOMAIN, cmd)
 
-    return result.stdout
+    return output
 
 
 async def async_setup(hass, config):
@@ -32,15 +33,14 @@ async def async_setup(hass, config):
 
 
 async def async_setup_entry(hass, config_entry):
-    """Set up the integration."""
+    """Set up this integration using UI."""
 
-    if hass.data.get(DOMAIN):
+    if hass.data.get(DOMAIN) is not None:
         return False
 
-    hass.data[DOMAIN] = True
-
-    async def scan(call):
-        output = await hass.async_add_executor_job(run_cmd, SCAN_CMD)
+    # scan service
+    async def scan(service):
+        output = subp_run(SCAN_CMD).stdout
         _LOGGER.info("[%s] scan -> %s", DOMAIN, output)
         return {"output": output}
 
@@ -51,37 +51,37 @@ async def async_setup_entry(hass, config_entry):
         supports_response=SupportsResponse.ONLY,
     )
 
-    async def help_cmd(call):
-        output = await hass.async_add_executor_job(run_cmd, HELP_CMD)
+    # help service
+    async def help(service):
+        output = subp_run(HELP_CMD).stdout
         return {"help": output}
 
     hass.services.async_register(
         DOMAIN,
         "help",
-        help_cmd,
+        help,
         supports_response=SupportsResponse.ONLY,
     )
 
-    async def stop(call):
-        device = call.data["friendly_name"]
-        await hass.async_add_executor_job(
-            run_cmd,
-            CMD_BASE + [device] + STOP_ARGS
-        )
+    # stop service
+    async def stop(service):
+        dname = service.data["friendly_name"]
+        subp_run(CMD_BASE + [dname] + STOP_ARGS)
 
     hass.services.async_register(DOMAIN, "stop", stop)
 
-    async def command(call):
-        device = call.data["friendly_name"]
-        cmd = call.data["command"]
-        param = call.data.get("param")
+    # command service
+    async def command(service):
+        dname = service.data["friendly_name"]
+        cmd = service.data["command"]
+        param = service.data.get("param")
 
-        command = CMD_BASE + [device, cmd]
+        cmdline = CMD_BASE + [dname, cmd]
 
         if param:
-            command.append(param)
+            cmdline.append(param)
 
-        await hass.async_add_executor_job(run_cmd, command)
+        subp_run(cmdline)
 
     hass.services.async_register(DOMAIN, "command", command)
 
