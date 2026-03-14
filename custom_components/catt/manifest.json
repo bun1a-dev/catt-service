@@ -1,9 +1,9 @@
 {
-  "domain": "catt",
+  "domain": "catt-service",
   "name": "Cast All The Things!",
-  "documentation": "https://github.com/miumida/catt",
+  "documentation": "https://github.com/bun1a-dev/catt-service",
   "dependencies": [],
-  "codeowners": ["@miumida"],
+  "codeowners": ["@bun1a-dev"],
   "requirements": ["catt==0.13.1"],
   "config_flow": true,
   "iot_class": "local_polling",
