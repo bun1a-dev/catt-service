@@ -1,6 +1,7 @@
 {
   "domain": "catt_service",
   "name": "Cast All The Things!",
+
   "codeowners": ["@bun1a-dev"],
   "config_flow": true,
   "dependencies": [],
