@@ -9,7 +9,7 @@ stop:
   fields:
     friendly_name:
       description: "Enter the name of a device available to CATT."
-      example: "Mini"
+      example: "Nest Mini"
       selector:
         text:
 
@@ -18,7 +18,7 @@ command:
   fields:
     friendly_name:
       description: "Enter the name or IP address of a device available to CATT."
-      example: "Mini"
+      example: "Nest Mini"
       selector:
         text:
     command:
