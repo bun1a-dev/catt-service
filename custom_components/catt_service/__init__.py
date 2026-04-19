@@ -5,7 +5,9 @@ from homeassistant import config_entries
 from homeassistant.core import SupportsResponse
 
 from .const import DOMAIN
+from homeassistant.helpers import config_validation as cv
 
+CONFIG_SCHEMA = cv.config_entry_only_config_schema
 _LOGGER = logging.getLogger(__name__)
 
 CMD_BASE = ["catt", "-d"]
