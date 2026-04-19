@@ -1,13 +1,14 @@
 {
   "domain": "catt_service",
   "name": "Cast All The Things!",
-  "documentation": "https://github.com/bun1a-dev/catt-service",
-  "dependencies": [],
+
   "codeowners": ["@bun1a-dev"],
-  "issue_tracker": "https://github.com/bun1a-dev/catt-service/issues",
-  "requirements": ["catt==0.13.1"],
   "config_flow": true,
-  "iot_class": "local_polling",
+  "dependencies": [],
+  "documentation": "https://github.com/bun1a-dev/catt-service",
   "integration_type": "service",
-  "version": "2.0.0"
+  "issue_tracker": "https://github.com/bun1a-dev/catt-service/issues",
+  "iot_class": "local_polling",
+  "requirements": ["catt==0.13.1"],
+  "version": "1.0.0"
 }
