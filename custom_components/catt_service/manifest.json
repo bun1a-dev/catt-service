@@ -4,6 +4,7 @@
   "documentation": "https://github.com/bun1a-dev/catt-service",
   "dependencies": [],
   "codeowners": ["@bun1a-dev"],
+  "issue_tracker": "https://github.com/bun1a-dev/catt-service/issues",
   "requirements": ["catt==0.13.1"],
   "config_flow": true,
   "iot_class": "local_polling",
